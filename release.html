@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SANDIX+ | Streaming, reimagined.</title>
+
+    <meta
+        name="description"
+        content="SANDIX+ is an independent streaming platform built for viewers, creators and independent content."
+    >
+
+    <style>
+        :root {
+            --bg: #0f0e0d;
+            --bg-soft: #151412;
+            --surface: #1b1917;
+            --surface-light: #24211f;
+            --text: #eeeae4;
+            --muted: #9b9690;
+            --red: #c20d18;
+            --red-hover: #e01522;
+            --border: rgba(255,255,255,.09);
+            --radius: 22px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1160px, calc(100% - 40px));
+            margin: auto;
+        }
+
+        /* NAV */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 1px solid transparent;
+            transition: .3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(15,14,13,.86);
+            backdrop-filter: blur(18px);
+            border-color: var(--border);
+        }
+
+        .nav-inner {
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -1.2px;
+        }
+
+        .logo span {
+            color: var(--red);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .language {
+            display: flex;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 3px;
+            background: rgba(255,255,255,.03);
+        }
+
+        .language button {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            padding: 7px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .language button.active {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        .nav-cta {
+            background: var(--text);
+            color: var(--bg);
+            padding: 10px 17px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 800;
+            transition: .2s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 140px 0 100px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 650px;
+            height: 650px;
+            background: rgba(194,13,24,.12);
+            filter: blur(130px);
+            border-radius: 50%;
+            top: 10%;
+            right: -250px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: var(--red);
+        }
+
+        h1 {
+            font-size: clamp(58px, 10vw, 124px);
+            line-height: .88;
+            letter-spacing: -7px;
+            font-weight: 900;
+            max-width: 1000px;
+        }
+
+        h1 span {
+            color: var(--red);
+        }
+
+        .hero-description {
+            max-width: 650px;
+            margin-top: 35px;
+            color: var(--muted);
+            font-size: clamp(17px, 2vw, 21px);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+            padding: 0 23px;
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: 14px;
+            transition: .2s ease;
+            border: 1px solid var(--border);
+        }
+
+        .btn-primary {
+            background: var(--red);
+            border-color: var(--red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--red-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,.04);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,.08);
+        }
+
+        /* SECTIONS */
+
+        section {
+            padding: 120px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-header {
+            max-width: 720px;
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 11px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            font-size: clamp(38px, 6vw, 70px);
+            line-height: .98;
+            letter-spacing: -3px;
+        }
+
+        .section-description {
+            margin-top: 20px;
+            color: var(--muted);
+            font-size: 17px;
+            max-width: 650px;
+        }
+
+        /* STATS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .stat {
+            background: var(--surface);
+            padding: 35px;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 42px;
+            letter-spacing: -2px;
+        }
+
+        .stat p {
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        /* ZAPMATCH */
+
+        .zapmatch {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            align-items: stretch;
+        }
+
+        .zap-card {
+            min-height: 430px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background:
+                radial-gradient(
+                    circle at 75% 20%,
+                    rgba(194,13,24,.25),
+                    transparent 35%
+                ),
+                var(--surface);
+            padding: 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .zap-icon {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 85px;
+            height: 85px;
+            border-radius: 24px;
+            background: var(--red);
+            display: grid;
+            place-items: center;
+            font-size: 38px;
+            font-weight: 900;
+            transform: rotate(-8deg);
+        }
+
+        .zap-card h3 {
+            font-size: 44px;
+            line-height: .95;
+            letter-spacing: -2px;
+        }
+
+        .zap-card p {
+            color: var(--muted);
+            margin-top: 18px;
+            max-width: 460px;
+        }
+
+        .zap-points {
+            display: grid;
+            gap: 12px;
+        }
+
+        .point {
+            padding: 22px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .point strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .point span {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* PRICE */
+
+        .pricing {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .price-card {
+            background: var(--text);
+            color: var(--bg);
+            border-radius: var(--radius);
+            padding: 50px;
+        }
+
+        .price {
+            font-size: clamp(65px, 9vw, 105px);
+            line-height: .9;
+            letter-spacing: -6px;
+            font-weight: 900;
+        }
+
+        .price small {
+            font-size: 20px;
+            letter-spacing: 0;
+        }
+
+        .price-card p {
+            margin-top: 20px;
+            color: #5e5a56;
+        }
+
+        .price-card .btn {
+            margin-top: 30px;
+            background: var(--bg);
+            color: var(--text);
+            border-color: var(--bg);
+        }
+
+        .pricing-copy {
+            padding: 30px;
+        }
+
+        .pricing-copy h3 {
+            font-size: 38px;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .pricing-copy p {
+            margin-top: 20px;
+            color: var(--muted);
+        }
+
+        /* COLLABORATION */
+
+        .careers {
+            background: var(--surface);
+        }
+
+        .career-box {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: clamp(35px, 6vw, 70px);
+            background: var(--bg);
+        }
+
+        .career-box h2 {
+            max-width: 800px;
+        }
+
+        .career-box > p {
+            max-width: 700px;
+            color: var(--muted);
+            margin-top: 25px;
+        }
+
+        .roles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 30px 0;
+        }
+
+        .role {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.03);
+            border-radius: 999px;
+            padding: 9px 14px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .email {
+            display: inline-block;
+            color: var(--text);
+            font-size: clamp(20px, 4vw, 34px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            border-bottom: 2px solid var(--red);
+            padding-bottom: 4px;
+            margin-top: 10px;
+        }
+
+        .voluntary {
+            margin-top: 15px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 55px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .footer-copy {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .footer-copy strong {
+            color: var(--text);
+        }
+
+        /* REVEAL */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+            .container {
+                width: min(100% - 28px, 1160px);
+            }
+
+            .nav-cta {
+                display: none;
+            }
+
+            .nav-inner {
+                height: 68px;
+            }
+
+            h1 {
+                letter-spacing: -4px;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            .stats,
+            .zapmatch,
+            .pricing {
+                grid-template-columns: 1fr;
+            }
+
+            .stat {
+                padding: 25px;
+            }
+
+            .zap-card {
+                min-height: 360px;
+                padding: 30px;
+            }
+
+            .price-card {
+                padding: 35px;
+            }
+
+            .pricing-copy {
+                padding: 10px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .language button {
+                padding: 6px 9px;
+            }
+
+            .hero {
+                padding-top: 120px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav id="navbar">
+    <div class="container nav-inner">
+
+        <a href="#" class="logo">
+            SANDIX<span>+</span>
+        </a>
+
+        <div class="nav-right">
+
+            <div class="language">
+                <button id="enBtn" class="active">EN</button>
+                <button id="frBtn">FR</button>
+            </div>
+
+            <a
+                class="nav-cta"
+                href="https://www.sandixplus.com/login.html?ref=github"
+            >
+                <span data-en="Open SANDIX+" data-fr="Ouvrir SANDIX+">
+                    Open SANDIX+
+                </span>
+            </a>
+
+        </div>
+    </div>
+</nav>
+
+
+<main>
+
+    <!-- HERO -->
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content reveal">
+
+                <div class="eyebrow">
+                    <span data-en="SANDIX+ PROJECT" data-fr="PROJET SANDIX+">
+                        SANDIX+ PROJECT
+                    </span>
+                </div>
+
+                <h1>
+                    <span>SANDIX+</span><br>
+                    <span
+                        data-en="Streaming,"
+                        data-fr="Le streaming,"
+                    >
+                        Streaming,
+                    </span>
+                    <br>
+                    <span
+                        data-en="reimagined."
+                        data-fr="réinventé."
+                    >
+                        reimagined.
+                    </span>
+                </h1>
+
+                <p
+                    class="hero-description"
+                    data-en="An independent streaming platform built around viewers, creators and the future of audiovisual content."
+                    data-fr="Une plateforme de streaming indépendante pensée autour des spectateurs, des créateurs et de l'avenir du contenu audiovisuel."
+                >
+                    An independent streaming platform built around viewers,
+                    creators and the future of audiovisual content.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a
+                        href="https://www.sandixplus.com/login.html?ref=github"
+                        class="btn btn-primary"
+                        data-en="Enter SANDIX+"
+                        data-fr="Entrer sur SANDIX+"
+                    >
+                        Enter SANDIX+
+                    </a>
+
+                    <a
+                        href="#zapmatch"
+                        class="btn btn-secondary"
+                        data-en="Discover ZapMatch"
+                        data-fr="Découvrir ZapMatch"
+                    >
+                        Discover ZapMatch
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- PLATFORM -->
+
+    <section>
+        <div class="container">
+
+            <div class="section-header reveal">
+
+                <div
+                    class="section-label"
+                    data-en="THE PLATFORM"
+                    data-fr="LA PLATEFORME"
+                >
+                    THE PLATFORM
+                </div>
+
+                <h2
+                    data-en="Built differently."
+                    data-fr="Construite différemment."
+                >
+                    Built differently.
+                </h2>
+
+                <p
+                    class="section-description"
+                    data-en="SANDIX+ is an independent streaming ecosystem designed to make discovering audiovisual content simpler, more direct and more human."
+                    data-fr="SANDIX+ est un écosystème de streaming indépendant conçu pour rendre la découverte de contenus audiovisuels plus simple, plus directe et plus humaine."
+                >
+                    SANDIX+ is an independent streaming ecosystem designed
+                    to make discovering audiovisual content simpler,
+                    more direct and more human.
+                </p>
+
+            </div>
+
+            <div class="stats reveal">
+
+                <div class="stat">
+                    <strong>€4.99</strong>
+                    <p
+                        data-en="Monthly subscription"
+                        data-fr="Abonnement mensuel"
+                    >
+                        Monthly subscription
+                    </p>
+                </div>
+
+                <div class="stat">
+                    <strong>01</strong>
+                    <p
+                        data-en="Independent platform"
+                        data-fr="Plateforme indépendante"
+                    >
+                        Independent platform
+                    </p>
+                </div>
+
+                <div class="stat">
+                    <strong>∞</strong>
+                    <p
+                        data-en="Room to evolve"
+                        data-fr="Un projet en évolution"
+                    >
+                        Room to evolve
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ZAPMATCH -->
+
+    <section id="zapmatch">
+        <div class="container">
+
+            <div class="section-header reveal">
+
+                <div
+                    class="section-label"
+                    data-en="DISCOVERY"
+                    data-fr="DÉCOUVERTE"
+                >
+                    DISCOVERY
+                </div>
+
+                <h2
+                    data-en="Meet ZapMatch."
+                    data-fr="Découvrez ZapMatch."
+                >
+                    Meet ZapMatch.
+                </h2>
+
+                <p
+                    class="section-description"
+                    data-en="Stop scrolling through endless catalogs. Start discovering."
+                    data-fr="Arrêtez de parcourir des catalogues interminables. Commencez à découvrir."
+                >
+                    Stop scrolling through endless catalogs.
+                    Start discovering.
+                </p>
+
+            </div>
+
+
+            <div class="zapmatch">
+
+                <div class="zap-card reveal">
+
+                    <div class="zap-icon">Z</div>
+
+                    <h3>
+                        Zap<br>Match.
+                    </h3>
+
+                    <p
+                        data-en="A fast, interactive way to discover films. Swipe, explore and decide what deserves your attention."
+                        data-fr="Une manière rapide et interactive de découvrir des films. Swipez, explorez et décidez ce qui mérite votre attention."
+                    >
+                        A fast, interactive way to discover films.
+                        Swipe, explore and decide what deserves your attention.
+                    </p>
+
+                </div>
+
+
+                <div class="zap-points reveal">
+
+                    <div class="point">
+                        <strong
+                            data-en="Swipe to discover"
+                            data-fr="Swipez pour découvrir"
+                        >
+                            Swipe to discover
+                        </strong>
+
+                        <span
+                            data-en="Explore films through an intuitive interaction."
+                            data-fr="Découvrez des films grâce à une interaction intuitive."
+                        >
+                            Explore films through an intuitive interaction.
+                        </span>
+                    </div>
+
+                    <div class="point">
+                        <strong
+                            data-en="Save what matters"
+                            data-fr="Gardez ce qui vous intéresse"
+                        >
+                            Save what matters
+                        </strong>
+
+                        <span
+                            data-en="Keep interesting films for later."
+                            data-fr="Conservez les films qui vous intéressent pour plus tard."
+                        >
+                            Keep interesting films for later.
+                        </span>
+                    </div>
+
+                    <div class="point">
+                        <strong
+                            data-en="Discover differently"
+                            data-fr="Découvrez autrement"
+                        >
+                            Discover differently
+                        </strong>
+
+                        <span
+                            data-en="A discovery experience designed around action rather than endless browsing."
+                            data-fr="Une expérience pensée autour de l'action plutôt que de la navigation interminable."
+                        >
+                            A discovery experience designed around action
+                            rather than endless browsing.
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- PRICING -->
+
+    <section>
+        <div class="container">
+
+            <div class="pricing">
+
+                <div class="price-card reveal">
+
+                    <div class="price">
+                        €4.99
+                        <small>/ month</small>
+                    </div>
+
+                    <p
+                        data-en="A simple monthly subscription to access the SANDIX+ experience."
+                        data-fr="Un abonnement mensuel simple pour accéder à l'expérience SANDIX+."
+                    >
+                        A simple monthly subscription to access
+                        the SANDIX+ experience.
+                    </p>
+
+                    <a
+                        href="https://www.sandixplus.com/login.html?ref=github"
+                        class="btn"
+                        data-en="Get started"
+                        data-fr="Commencer"
+                    >
+                        Get started
+                    </a>
+
+                </div>
+
+
+                <div class="pricing-copy reveal">
+
+                    <div
+                        class="section-label"
+                        data-en="SIMPLE"
+                        data-fr="SIMPLE"
+                    >
+                        SIMPLE
+                    </div>
+
+                    <h3
+                        data-en="One platform. One experience."
+                        data-fr="Une plateforme. Une expérience."
+                    >
+                        One platform. One experience.
+                    </h3>
+
+                    <p
+                        data-en="SANDIX+ keeps its subscription model straightforward, with a €4.99 monthly plan designed to keep the experience accessible and easy to understand."
+                        data-fr="SANDIX+ garde son modèle d'abonnement simple, avec une formule mensuelle à 4,99 € conçue pour rester accessible et facile à comprendre."
+                    >
+                        SANDIX+ keeps its subscription model straightforward,
+                        with a €4.99 monthly plan designed to keep the
+                        experience accessible and easy to understand.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- CAREERS -->
+
+    <section class="careers">
+        <div class="container">
+
+            <div class="career-box reveal">
+
+                <div
+                    class="section-label"
+                    data-en="JOIN THE PROJECT"
+                    data-fr="REJOINDRE LE PROJET"
+                >
+                    JOIN THE PROJECT
+                </div>
+
+                <h2
+                    data-en="Build SANDIX+ with us."
+                    data-fr="Construisez SANDIX+ avec nous."
+                >
+                    Build SANDIX+ with us.
+                </h2>
+
+                <p
+                    data-en="We are open to people who want to contribute to the project. This is not only for developers. Whether your skills are in development, design, audiovisual, content, communication, marketing, partnerships or community, we want to hear from you."
+                    data-fr="Nous sommes ouverts aux personnes qui souhaitent contribuer au projet. Cela ne concerne pas uniquement les développeurs. Que vos compétences soient dans le développement, le design, l'audiovisuel, le contenu, la communication, le marketing, les partenariats ou la communauté, nous voulons vous entendre."
+                >
+                    We are open to people who want to contribute to the project.
+                    This is not only for developers. Whether your skills are
+                    in development, design, audiovisual, content, communication,
+                    marketing, partnerships or community, we want to hear from you.
+                </p>
+
+                <div class="roles">
+
+                    <div class="role">Development</div>
+                    <div class="role">Design</div>
+                    <div class="role">Audiovisual</div>
+                    <div class="role">Content</div>
+                    <div class="role">Communication</div>
+                    <div class="role">Marketing</div>
+                    <div class="role">Partnerships</div>
+                    <div class="role">Community</div>
+
+                </div>
+
+                <a
+                    href="mailto:careers@sandixplus.com"
+                    class="email"
+                >
+                    careers@sandixplus.com
+                </a>
+
+                <p
+                    class="voluntary"
+                    data-en="At this stage, contributions to the project are voluntary and unpaid."
+                    data-fr="À ce stade, les contributions au projet sont bénévoles et non rémunérées."
+                >
+                    At this stage, contributions to the project are
+                    voluntary and unpaid.
+                </p>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+
+<footer>
+    <div class="container footer-inner">
+
+        <div class="logo">
+            SANDIX<span>+</span>
+        </div>
+
+        <div
+            class="footer-copy"
+            data-en="Independent streaming. Built to evolve."
+            data-fr="Streaming indépendant. Conçu pour évoluer."
+        >
+            Independent streaming. Built to evolve.
+        </div>
+
+        <div class="footer-copy">
+            © 2026 <strong>SANDIX+</strong>
+        </div>
+
+    </div>
+</footer>
+
+
+<script>
+
+    /* NAVBAR */
+
+    const navbar = document.getElementById("navbar");
+
+    window.addEventListener("scroll", () => {
+        navbar.classList.toggle("scrolled", window.scrollY > 20);
+    });
+
+
+    /* LANGUAGE */
+
+    const enBtn = document.getElementById("enBtn");
+    const frBtn = document.getElementById("frBtn");
+
+    function setLanguage(language) {
+
+        document.documentElement.lang = language;
+
+        document.querySelectorAll("[data-en]").forEach(element => {
+
+            const value = element.dataset[language];
+
+            if (value) {
+                element.textContent = value;
+            }
+
+        });
+
+        enBtn.classList.toggle("active", language === "en");
+        frBtn.classList.toggle("active", language === "fr");
+
+        localStorage.setItem("sandix-release-language", language);
+    }
+
+    enBtn.addEventListener("click", () => {
+        setLanguage("en");
+    });
+
+    frBtn.addEventListener("click", () => {
+        setLanguage("fr");
+    });
+
+
+    /* REVEAL ANIMATIONS */
+
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+    revealElements.forEach(element => {
+        observer.observe(element);
+    });
+
+
+    /* RESTORE LANGUAGE */
+
+    const savedLanguage =
+        localStorage.getItem("sandix-release-language");
+
+    if (savedLanguage === "fr") {
+        setLanguage("fr");
+    } else {
+        setLanguage("en");
+    }
+
+</script>
+
+</body>
+</html>
